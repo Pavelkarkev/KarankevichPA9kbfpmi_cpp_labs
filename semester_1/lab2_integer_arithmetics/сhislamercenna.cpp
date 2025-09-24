@@ -5,12 +5,12 @@ int main() {
     int a;
     int b;
     int counter = 0;
-    int n = std::min(a, b);
     std::cout << "enter boundaries a b" << std::endl;
     if (!(std::cin >> a >> b)) {
         std::cout << "wont work";
         std::exit(1);
     }
+    int n = std::min(a, b);
     if (n < 0) {
         n = 0;
     }
