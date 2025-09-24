@@ -12,9 +12,9 @@ int main() {
         std::exit(1);
     }
     if (n < 0) {
-         n = 1;
+        n = 0;
     }
-    if (n && std::max(a,b)< 0) {
+    if (n==0 && std::max(a, b) < 0) {
         std::cout << "numbers should be positive";
         std::exit(0);
     }
@@ -24,12 +24,11 @@ int main() {
         if ((i + 1) % powerof2 == 0) {
             counter++;
         }
-            if (powerof2>std::min(a,b) && (i + 1) % powerof2 == 0) {
-                std::cout << i << " ";
-            }
-        
+        if (powerof2 > std::min(a, b) && (i + 1) % powerof2 == 0 && i !=0) {
+            std::cout << i << " ";
+        }
+
     }
 
 }
-
 
