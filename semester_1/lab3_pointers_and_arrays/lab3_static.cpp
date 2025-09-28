@@ -19,7 +19,6 @@ int main()
     }
    
     int* p = new int[n];
-    int* valuevgetback = new int[n];
     int forrand=0;
     std::cout << "for random numebrs type 67" << std::endl;
     std::cin >> forrand;
@@ -28,7 +27,11 @@ int main()
         int a = 0;
         int b = 0;
         std::cout << "enter two whole numbers that will be boundaries of generation" << std::endl;
-        std::cin >> a >> b;
+        if (!(std::cin >> a >> b)) {
+            std::cout << "no chepuha please.Enter whole numbers";
+            delete[] p;
+            std::exit(1);
+        }
         std::mt19937 gen;
         std::uniform_int_distribution<int> dist(std::min(a, b), std::max(a, b));   
         for (int i = 0; i < n; ++i) {
@@ -40,6 +43,7 @@ int main()
         for (int i = 0; i < n; ++i) {
             if (!(std::cin >> p[i])) {
                 std::cout << "no chepuha please.Enter whole numbers";
+                delete[] p;
                 std::exit(1);
             }
            
@@ -59,22 +63,16 @@ int main()
         p[min] ^= (p[max] ^= (p[min] ^= p[max]));
         for (int i = 0; i < n; ++i) {
             std::cout << p[i] << " ";
-            valuevgetback[i] = p[i];
         }
-        for (int i = 0; i < n; ++i) {
-            p[i] = abs(p[i]);
-        }
+        p[min] ^= (p[max] ^= (p[min] ^= p[max]));
         int absmin = 0;
         for (int i = 1; i < n; ++i) {
-            if (p[i] < p[absmin]) {
+            if (std::abs(p[i]) < std::abs(p[absmin])) {
                 absmin = i;
             }
         }
-        for (int i = 0; i < n; ++i) {
-            p[i] = valuevgetback[i];
-        }
         int sum = 0;
-        for (int k = absmin+1; k < n; ++k) {
+        for (int k = absmin + 1; k < n; ++k) {
             sum+=p[k];
         }
         std::cout << "summary of the numbers is:" << sum << std::endl;
@@ -98,7 +96,8 @@ int main()
             std::cout << p[i] << " ";
         }
     delete [] p;
-    delete [] valuevgetback;
     std::cout << ":)";
     return 0;   
 }
+
+
