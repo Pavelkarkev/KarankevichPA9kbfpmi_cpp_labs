@@ -14,8 +14,6 @@ int main() {
     int forrand = 0;
     std::cout << "for random numebrs type 67" << std::endl;
     std::cin >> forrand;
-    if (forrand == 67) {
-        std::cout << "SIX SEVEEEEN" << std::endl;
         int a = 0;
         int b = 0;
         std::cout << "enter two whole numbers that will be boundaries of generation" << std::endl;
