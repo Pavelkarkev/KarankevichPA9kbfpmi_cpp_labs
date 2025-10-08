@@ -26,6 +26,7 @@ int main() {
         }
         std::mt19937 gen;
         std::uniform_int_distribution<int> dist(std::min(a, b), std::max(a, b));
+        std::cout << "our array:";
         for (int i = 0; i < n; ++i) {
             p[i] = dist(gen);
             std::cout << p[i] << " ";
@@ -84,7 +85,7 @@ int main() {
         }
     }
     std::cout << "summary of numbers between the smallest and the biggest positive numbers is:" << sumpos << std::endl;
- 
+
     for (int i = 0; i < n - 1; ++i) {
         for (int j = 0; j < n - i - 1; ++j) {
             if (p[j] >= 0 && p[j + 1] < 0) {
