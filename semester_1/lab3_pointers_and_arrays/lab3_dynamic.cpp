@@ -8,7 +8,7 @@ int main() {
     if (!(std::cin >> n) || (n < 0)) {
         std::cout << "please enter natural numbers";
         std::exit(1);
-       
+
     }
     int* p = new int[n];
     int forrand = 0;
@@ -28,7 +28,7 @@ int main() {
         std::uniform_int_distribution<int> dist(std::min(a, b), std::max(a, b));
         for (int i = 0; i < n; ++i) {
             p[i] = dist(gen);
-            std::cout << p[i]<<" ";
+            std::cout << p[i] << " ";
         }
     }
     else {
@@ -42,13 +42,13 @@ int main() {
 
         }
     }
-    int mod=1;
+    int mod = 1;
     for (int i = 0; i < n; ++i) {
         if (i % 2 == 0) {
             mod *= p[i];
         }
     }
-    std::cout << "product of numbers with the even index is:"<<mod<<std::endl;
+    std::cout << "product of numbers with the even index is:" << mod << std::endl;
     int minpos = -1;
     int maxpos = -1;
     for (int i = 0; i < n; ++i) {
@@ -59,7 +59,7 @@ int main() {
         }
     }
 
-  
+
     if (minpos != -1) {
         for (int i = minpos + 1; i < n; ++i) {
             if (p[i] > 0) {
@@ -72,34 +72,33 @@ int main() {
             }
         }
     }
-    int sumpos=0;
+    int sumpos = 0;
     if (maxpos > minpos) {
-        for (int i = minpos+1; i < maxpos; ++i) {
+        for (int i = minpos + 1; i < maxpos; ++i) {
             sumpos += p[i];
         }
     }
     if (maxpos < minpos) {
-        for (int i = maxpos+1; i < minpos; ++i) {
+        for (int i = maxpos + 1; i < minpos; ++i) {
             sumpos += p[i];
         }
     }
-    else {
-        std::cout << "summary of numbers between the smallest and the biggest positive numbers is:" << sumpos << std::endl;
-    }
-        for (int i = 0; i < n - 1; ++i) {
-            for (int j = 0; j < n - i - 1; ++j) {
-                if (p[j] >= 0 && p[j + 1] < 0) {
-                    int temp = p[j];
-                    p[j] = p[j + 1];
-                    p[j + 1] = temp;
-                }
+    std::cout << "summary of numbers between the smallest and the biggest positive numbers is:" << sumpos << std::endl;
+ 
+    for (int i = 0; i < n - 1; ++i) {
+        for (int j = 0; j < n - i - 1; ++j) {
+            if (p[j] >= 0 && p[j + 1] < 0) {
+                int temp = p[j];
+                p[j] = p[j + 1];
+                p[j + 1] = temp;
             }
         }
-        for (int i = 0; i < n; ++i) {
-            std::cout << p[i] << " ";
-        }
-    
-        delete[] p;
-        return 0;
-    
+    }
+    for (int i = 0; i < n; ++i) {
+        std::cout << p[i] << " ";
+    }
+
+    delete[] p;
+    return 0;
+
 }
