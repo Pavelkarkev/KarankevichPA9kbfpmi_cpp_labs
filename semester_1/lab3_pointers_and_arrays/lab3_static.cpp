@@ -2,7 +2,7 @@
 #include<cmath>
 #include<random>
 void inputnumberwithcheck(int&length) {
-    std::cout << "enter the length of the array";
+    std::cout << "enter the length of the array"<<std::endl;
     if (!(std::cin >> length)||length<=0) {
         std::cout<< "no chepuha please.enter whole numbers";
         std::exit(1);
