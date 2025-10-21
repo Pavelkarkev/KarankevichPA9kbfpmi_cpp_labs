@@ -65,6 +65,7 @@ void findingthemost1(int&row,int&col,int**matrix) {
                         for (int m = 0; m < col; ++m) {
                             if (matrix[k][m] == 1) {
                                 count1++;
+                                num2ofcouts++;
                             }
                         }
                     if (comparison1 < count1) {
@@ -154,3 +155,4 @@ int main() {
     std::cout << ":)";
     return 0;
 }
+
