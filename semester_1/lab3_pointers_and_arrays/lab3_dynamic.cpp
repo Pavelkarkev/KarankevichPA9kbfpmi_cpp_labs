@@ -1,30 +1,29 @@
 #include <iostream>
 #include<cmath>
 #include<random>
-int* allocatingmemory(int& length) {
+int* allocatingmemory(int length) {
     return new int[length];
 }
-void genrandomforarraywithboundaries(int& length, int* arr, int& a, int& b) {
+void genRandomForArrayWithBoundaries(int length, int* arr, int a, int b, std::mt19937& gen) {
     std::cout << "enter two whole numbers that will be boundaries of generation" << std::endl;
     if (!(std::cin >> a >> b)) {
         std::cout << "no chepuha please.enter whole numbers";
         delete[] arr;
         std::exit(1);
     }
-    std::mt19937 gen;
     std::uniform_int_distribution<int> dist(std::min(a, b), std::max(a, b));
     for (int i = 0; i < length; ++i) {
         arr[i] = dist(gen);
     }
 }
-void inputnumberwithcheck(int& length) {
-    std::cout << "enter the length of the array"<<std::endl;
+void inputNumberWithCheck(int& length) {
+    std::cout << "enter the length of the array" << std::endl;
     if (!(std::cin >> length) || length <= 0) {
         std::cout << "no chepuha please.enter whole numbers";
         std::exit(1);
     }
 }
-void inputwithcheckchoice(int& forrand, int* arr) {
+void inputWithCheckChoice(int& forrand, int* arr) {
     std::cout << "for random numebrs type 67,for manual input type anything else" << std::endl;
     if (!(std::cin >> forrand)) {
         std::cout << "no chepuha please.enter normal numbers";
@@ -32,7 +31,7 @@ void inputwithcheckchoice(int& forrand, int* arr) {
         std::exit(1);
     }
 }
-void manualinputingwithcheck(int& length, int* arr) {
+void manualinputingwithcheck(int length, int* arr) {
     std::cout << "enter the elements of the array" << std::endl;
     for (int i = 0; i < length; ++i) {
         if (!(std::cin >> arr[i])) {
@@ -42,47 +41,48 @@ void manualinputingwithcheck(int& length, int* arr) {
         }
     }
 }
-void multyplying(int& length, int* arr,int&mod) {
+void multyplying(int length, int* arr, int& mod) {
+    if (length == 1) {
+        std::cerr << "Coudnt calculate the product" << std::endl;
+        return;
+    }
     for (int i = 0; i < length; ++i) {
-        if (i % 2 == 0) {
+        if (i % 2 != 0) {
             mod *= arr[i];
         }
     }
+    std::cout << "product of numbers with the even numbers is:" << mod << std::endl;
 }
-void findingthebiggestandsmallestpositive(int& length, int* arr, int& maxpos, int& minpos) {
-    for (int i = 0; i < length; ++i) {
-        if (arr[i] > 0) {
-            minpos = i;
-            maxpos = i;
-            break;
-        }
-    }
-    if (minpos != -1) {
-        for (int i = minpos + 1; i < length; ++i) {
-            if (arr[i] > 0) {
-                if (arr[i] < arr[minpos]) {
-                    minpos = i;
-                }
-                if (arr[i] > arr[maxpos]) {
-                    maxpos = i;
-                }
+void findIndexOfPositives(int length, int* arr, int& maxpos, int& minpos) {
+        for (int i = 0; i < length; ++i) {
+            if ((arr[i] > 0)) {
+                minpos = i;
+                break;
             }
         }
-    }
-}
-void summarybetween(int* arr, int& maxpos, int& minpos,int&sumpos) {
-    if (maxpos > minpos) {
-        for (int i = minpos + 1; i < maxpos; ++i) {
-            sumpos += arr[i];
+        for (int i = length - 1; i > +0; --i) {
+            if ((arr[i] > 0)) {
+                maxpos = i;
+                break;
+            }
         }
-    }
-    if (maxpos < minpos) {
-        for (int i = maxpos + 1; i < minpos; ++i) {
-            sumpos += arr[i];
-        }
-    }
 }
-void modifiedbubblesort(int& length, int* arr) {
+void summaryBetween(int* arr, int maxpos, int minpos, int& sumpos) { 
+    if ((minpos == -1) && (maxpos == -1)) {
+        std::cerr << "No positives" << std::endl;
+        return;
+    }
+    if (minpos == maxpos) {
+        std::cerr << "Only 1 positive integer" << std::endl;
+        return;
+    }
+   
+    for (int i = minpos + 1; i < maxpos; ++i) {
+        sumpos += arr[i];
+    }
+    std::cout << "Summary of numbers between the first and the last positive numbers is:" << sumpos << std::endl;
+}
+void modifiedBubbleSort(int length, int* arr) {
     for (int i = 0; i < length - 1; ++i) {
         for (int j = 0; j < length - i - 1; ++j) {
             if (arr[j] >= 0 && arr[j + 1] < 0) {
@@ -93,40 +93,38 @@ void modifiedbubblesort(int& length, int* arr) {
         }
     }
 }
-void printarray(int& length, int* arr) {
+void printArray(int length, int* arr) {
     for (int i = 0; i < length; ++i) {
         std::cout << arr[i] << " ";
     }
 }
 int main() {
-    int length=0;
-    inputnumberwithcheck(length);
-    int* arr = allocatingmemory(length);
-    int forrand = 0;
-    inputwithcheckchoice(forrand, arr);
-    if (forrand == 67) {
-        int a = 0;
-        int b = 0;
-        genrandomforarraywithboundaries(length, arr, a, b);
-        std::cout << "our array:"<<" ";
-        printarray(length, arr);
-    }
-    else {
-        manualinputingwithcheck(length, arr);
-    }
-    int mod=1;
-    multyplying(length, arr, mod);
-    std::cout << "product of numbers with the even index is:"<<mod<<std::endl;
-    int minpos = -1;
-    int maxpos = -1;
-    findingthebiggestandsmallestpositive(length, arr, maxpos, minpos);
-    int sumpos=0;
-    summarybetween(arr, maxpos, minpos, sumpos);
-        std::cout << "summary of numbers between the smallest and the biggest positive numbers is:" << sumpos << std::endl;
-        modifiedbubblesort(length, arr);
-        std::cout<<"sorted array:";
-        printarray(length, arr);
+        int length = 0;
+        inputNumberWithCheck(length);
+        int* arr = allocatingmemory(length);
+        int forrand = 0;
+        inputWithCheckChoice(forrand, arr);
+        if (forrand == 67) {
+            int a = 0;
+            int b = 0;
+            std::mt19937 gen;
+            genRandomForArrayWithBoundaries(length, arr, a, b, gen);
+            std::cout << "our array:" << " ";
+            printArray(length, arr);
+        }
+        else {
+            manualinputingwithcheck(length, arr);
+        }
+        int mod = 1;
+        multyplying(length, arr, mod);
+        int minpos = -1;
+        int maxpos = -1;
+        findIndexOfPositives(length, arr, maxpos, minpos);
+        int sumpos = 0;
+        summaryBetween(arr, maxpos, minpos, sumpos);
+        modifiedBubbleSort(length, arr);
+        std::cout << "sorted array:";
+        printArray(length, arr);
         delete[] arr;
         return 0;
-    
 }
