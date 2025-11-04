@@ -1,8 +1,7 @@
 #include <iostream>
 #include<random>
-void genrandomforarrayonly01 (int& row, int**matrix, int& col) {
-    std::mt19937 gen;
-    std::uniform_int_distribution<int> dist(0,1);
+void genrandomforarrayonly01(int row, int** matrix, int col,std::mt19937& gen) {
+    std::uniform_int_distribution<int> dist(0, 1);
     for (int i = 0; i < row; ++i) {
         matrix[i] = new int[col];
     }
@@ -12,7 +11,7 @@ void genrandomforarrayonly01 (int& row, int**matrix, int& col) {
         }
     }
 }
-void matrixprint(int& row, int** matrix,int& col) {
+void matrixprint(int row, int** matrix, int col) {
     std::cout << "Our matrix:" << std::endl;
     for (int i = 0; i < row; i++)
     {
@@ -21,7 +20,7 @@ void matrixprint(int& row, int** matrix,int& col) {
         std::cout << std::endl;
     }
 }
-void manualinput(int** matrix, int& row, int& col) {
+void manualinput(int** matrix, int row, int col) {
     for (int i = 0; i < row; ++i) {
         matrix[i] = new int[col];
     }
@@ -29,7 +28,7 @@ void manualinput(int** matrix, int& row, int& col) {
     for (int i = 0; i < row; ++i) {
         for (int j = 0; j < col; ++j) {
             std::cout << "Input the element with the index[" << i << "][" << j << "]=";
-            if (!(std::cin >> matrix[i][j])||(matrix[i][j]<0)||(matrix[i][j]>1)) {
+            if (!(std::cin >> matrix[i][j]) || (matrix[i][j] < 0) || (matrix[i][j] > 1)) {
                 std::cout << "Please read the requirements.";
                 for (int i = 0; i < row; ++i) {
                     delete[]matrix[i];
@@ -54,42 +53,42 @@ void choosingpath(int& choose) {
         std::exit(1);
     }
 }
-void findingthemost1(int&row,int&col,int**matrix) {
+void findingTheMost1(int row, int col, int** matrix) {
     int max1 = 0;
-    int num2ofcouts = 0;
-            int comparison1 = 0;
-            int comparison2 = 0;
-            for (int k = 0; k < row; ++k) {
-                for (int m = 0; m < col; ++m) {
-                    int count1 = 0;
-                        for (int m = 0; m < col; ++m) {
-                            if (matrix[k][m] == 1) {
-                                count1++;
-                                num2ofcouts++;
-                            }
-                        }
-                    if (comparison1 < count1) {
-                        comparison1 = count1;
-                    }
-                }
-                if (comparison1 > comparison2) {
-                    max1 = k;
-                    comparison2 = comparison1;
+    bool isThere1 = false;
+    int comparison1 = 0;
+    int comparison2 = 0;
+    for (int k = 0; k < row; ++k) {
+        for (int m = 0; m < col; ++m) {
+            int count1 = 0;
+            for (int m = 0; m < col; ++m) {
+                if (matrix[k][m] == 1) {
+                    count1++;
+                    isThere1=true;
                 }
             }
-            if (num2ofcouts > 0) {
-                std::cout << "Row with the most 1 is:" << (max1 + 1) << std::endl;
+            if (comparison1 < count1) {
+                comparison1 = count1;
             }
-            if (num2ofcouts == 0) {
-                std::cout << "No ones here" << std::endl;
-            }
+        }
+        if (comparison1 > comparison2) {
+            max1 = k;
+            comparison2 = comparison1;
+        }
+    }
+    if (isThere1) {
+        std::cout << "Row with the most 1 is:" << (max1 + 1) << std::endl;
+    }
+    else {
+        std::cerr << "No ones here" << std::endl;
+    }
 }
-void findingsimmilarrows(int& row, int& col, int** matrix) {
-    int numofcouts = 0;
+void findingsimmilarrows(int row, int col, int** matrix) {
+    bool numOfCouts = false;
     for (int k = 0; k < row; ++k) {
         for (int j = k + 1; j < row; j++) {
-            bool isequal = false;
-            int initcount = 0;
+            bool isEqual = false;
+            int initCount = 0;
             for (int ifcounter = 0; ifcounter < col; ++ifcounter) {
                 bool CurrIsequal = true;
                 for (int m = 0; m < col; ++m) {
@@ -98,8 +97,8 @@ void findingsimmilarrows(int& row, int& col, int** matrix) {
                         break;
                     }
                 }
-                if (CurrIsequal==true) {
-                    isequal = true;
+                if (CurrIsequal == true) {
+                    isEqual = true;
                     break;
                 }
                 if (ifcounter < col - 1) {
@@ -108,27 +107,27 @@ void findingsimmilarrows(int& row, int& col, int** matrix) {
                         matrix[j][a] = matrix[j][a - 1];
                     }
                     matrix[j][0] = last;
-                    initcount++;
+                    initCount++;
                 }
             }
-            for (int b = 0; b < initcount; ++b) {
+            for (int b = 0; b < initCount; ++b) {
                 int first = matrix[j][0];
                 for (int a = 0; a < col - 1; a++) {
                     matrix[j][a] = matrix[j][a + 1];
                 }
                 matrix[j][col - 1] = first;
             }
-            if (isequal == true) {
-                std::cout << "Row " << (k + 1) << " is equal to row " << (j + 1) << " through "<<initcount << " shifts to the left " << std::endl;
-                ++numofcouts;
+            if (isEqual == true) {
+                std::cout << "Row " << (k + 1) << " is equal to row " << (j + 1) << " through " << initCount << " shifts to the left " << std::endl;
+                numOfCouts = true;
             }
         }
     }
-    if (numofcouts == 0) {
-        std::cout << "No equal rows here" << std::endl;
+    if (numOfCouts == false) {
+        std::cerr << "No equal rows here" << std::endl;
     }
 }
-void deletingmatrix(int**matrix,int&row){
+void deletingmatrix(int** matrix, int row) {
     for (int i = 0; i < row; ++i) {
         delete[]matrix[i];
     }
@@ -145,11 +144,12 @@ int main() {
         manualinput(matrix, row, col);
     }
     else {
-        genrandomforarrayonly01(row, matrix, col);
+        std::mt19937 gen;
+        genrandomforarrayonly01(row, matrix, col,gen);
     }
-    matrixprint(row, matrix,col);
+    matrixprint(row, matrix, col);
     findingsimmilarrows(row, col, matrix);
-    findingthemost1(row, col, matrix);
+    findingTheMost1(row, col, matrix);
     matrixprint(row, matrix, col);
     deletingmatrix(matrix, row);
     std::cout << ":)";
