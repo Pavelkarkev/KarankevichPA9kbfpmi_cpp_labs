@@ -2,7 +2,7 @@
 #include <string>
 #include<vector>
 bool isPunctuation(char c) {
-	const std::string punctuation = ".,!;:-—' ";
+	const std::string punctuation = ".,!;:-?' ";
 	return punctuation.find(c) != std::string::npos;
 }
 void EnterDelimeters(std::string& delimeters){
@@ -112,7 +112,7 @@ int main() {
 		EnterDelimeters(delimeters);
 	}
 	catch (const std::invalid_argument&) {
-		std::cerr << "please enter only delimeters(., ! ; : - —')";
+		std::cerr << "please enter only delimeters(., ! ; : - ?')";
 		return -1;
 	}
 	std::string text;
@@ -143,6 +143,7 @@ int main() {
 
 
 	
+
 
 
 
