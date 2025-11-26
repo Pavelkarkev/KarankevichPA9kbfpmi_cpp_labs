@@ -1,0 +1,97 @@
+#include <iostream>
+#include<string>
+#include <vector>
+#include<fstream>
+#include <cmath>
+#include <algorithm>
+bool isEmpty(std::ifstream& in) {
+	return in.peek() == std::ifstream::traits_type::eof();
+}
+void GetMaxAndMinPos( std::vector<std::string>& outputlines, int& maxpos, int& minpos,size_t&min, size_t&max) {
+	bool MaxWereFound = false;
+	bool MinWereFound = false;
+	for (int i = 0; i < outputlines.size(); i++) {
+		if (outputlines[i].length() == max && MaxWereFound == false) {
+			MaxWereFound = true;
+			maxpos = i;
+		}
+		if (outputlines[i].length() == min && MinWereFound == false) {
+			MinWereFound = true;
+			minpos = i;
+		}
+		if (MaxWereFound == true && MinWereFound == true) {
+			break;
+		}
+	}
+}
+
+std::vector<std::string> ReadAndprocess(const std::string input_file) {
+	std::ifstream in{ input_file };
+	if (!(in.is_open())) {
+		throw std::string("Error opening the file");
+	}
+	if (isEmpty(in)) {
+		throw std::string("File is empty");
+	}
+	std::string line;
+	std::vector<std::string> outputlines;
+	std::string c;
+	size_t min = 0;
+	size_t max = 0;
+	int maxpos = 0;
+	int minpos = 0;
+	bool werefound = false;
+	int j = 0;
+	std::string space = " ";
+	while (getline(in, line)) {
+		if (!line.empty()) {
+			for (size_t beg_index = line.find_first_not_of(space, 0); beg_index != std::string::npos;) {
+				size_t end_index = line.find_first_of(space, beg_index);
+				std::string word = line.substr(beg_index, end_index - beg_index);
+				outputlines.push_back(word);
+				beg_index = line.find_first_not_of(space, end_index);
+				end_index = line.find_first_of(space, end_index + 1);
+				if (werefound == false) {
+					min = word.length();
+					max = word.length();
+					werefound = true;
+				}
+				if (word.length() < min) {
+					min = word.length();
+				}
+				if (word.length() > max) {
+					max = word.length();
+				}
+			}
+
+		}
+		outputlines.push_back("\n");
+		j++;
+
+	}
+	if (j == 1) {
+		throw std::string("there is only one word");
+	}
+	in.close();
+	GetMaxAndMinPos(outputlines, maxpos, minpos, min, max);
+	std::swap(outputlines[maxpos], outputlines[minpos]);
+	return outputlines;
+}
+void OutputLines(std::vector<std::string>& lines) {
+	for (int j = 0; j < lines.size(); j++) {
+		std::cout << lines[j]<<" ";
+	}
+}
+int main()
+{
+	try {
+		const std::string input_file = "input.txt";
+		std::vector<std::string> lines = ReadAndprocess(input_file);
+		OutputLines(lines);
+	}
+	catch (const std::string& msg) {
+		std::cout << msg;
+	}
+
+
+}
