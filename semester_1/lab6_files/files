@@ -7,20 +7,33 @@
 bool isEmpty(std::ifstream& in) {
 	return in.peek() == std::ifstream::traits_type::eof();
 }
+bool isWord(const std::string& s) {
+	if (s.empty()) {
+		return false;
+	}
+	for (char c : s) {
+		if (!std::isspace(static_cast<unsigned char>(c))) {
+			return true;
+		}
+	}
+	return false;
+}
 void GetMaxAndMinPos( std::vector<std::string>& outputlines, int& maxpos, int& minpos,size_t&min, size_t&max) {
 	bool MaxWereFound = false;
 	bool MinWereFound = false;
 	for (int i = 0; i < outputlines.size(); i++) {
-		if (outputlines[i].length() == max && MaxWereFound == false) {
-			MaxWereFound = true;
-			maxpos = i;
-		}
-		if (outputlines[i].length() == min && MinWereFound == false) {
-			MinWereFound = true;
-			minpos = i;
-		}
-		if (MaxWereFound == true && MinWereFound == true) {
-			break;
+		if (isWord(outputlines[i])) {
+			if (outputlines[i].length() == max && MaxWereFound == false) {
+				MaxWereFound = true;
+				maxpos = i;
+			}
+			if (outputlines[i].length() == min && MinWereFound == false) {
+				MinWereFound = true;
+				minpos = i;
+			}
+			if (MaxWereFound == true && MinWereFound == true) {
+				break;
+			}
 		}
 	}
 }
@@ -77,13 +90,19 @@ std::vector<std::string> ReadAndprocess(const std::string input_file) {
 	std::swap(outputlines[maxpos], outputlines[minpos]);
 	return outputlines;
 }
+void printUTF8(const std::string& str) {
+	std::cout << str;
+}
 void OutputLines(std::vector<std::string>& lines) {
-	for (int j = 0; j < lines.size(); j++) {
-		std::cout << lines[j]<<" ";
+	for (size_t j = 0; j < lines.size(); j++) {
+		printUTF8(lines[j]);
+		std::cout << " ";
 	}
 }
+
 int main()
 {
+	system("chcp 65001 > nul");
 	try {
 		const std::string input_file = "input.txt";
 		std::vector<std::string> lines = ReadAndprocess(input_file);
