@@ -119,7 +119,13 @@ int main() {
     std::cout
         << "Warning:when you type in destination be sure to type it in accordance with register"
         << std::endl;
-    std::vector<Train>AllTrains=FromFileToVector(inpit_file);
+    std::vector<Train> AllTrains;
+try {
+    AllTrains = FromFileToVector(inpit_file);
+} catch (std::invalid_argument& e) {
+    std::cerr << e.what();
+    std::exit(1);
+}
     SortByDispatch(AllTrains);
     std::cout << "Sorted vector" << std::endl;
     PrintVector(AllTrains);
