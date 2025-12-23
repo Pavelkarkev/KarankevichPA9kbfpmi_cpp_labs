@@ -51,8 +51,10 @@ public:
         }
     }
     void InfoOut() {
-        std::cout << id_ << " " << GetTypeString() << " " << destination_ << " " << dispatch_time_
-                  << " " << travelling_time_ << std::endl;
+        std::cout << (*this).id_ << " " << (*this).GetTypeString() << " " << (*this).destination_
+                  << " ";
+        PrintTime((*this).dispatch_time_);
+        std::cout<< " " << (*this).travelling_time_ << std::endl;
     }
     std::string GetDestination() {
         return destination_;
@@ -61,3 +63,5 @@ public:
         return travelling_time_;
     }
 };
+
+
