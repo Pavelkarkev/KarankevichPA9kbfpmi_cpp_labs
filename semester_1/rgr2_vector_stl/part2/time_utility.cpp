@@ -21,7 +21,10 @@ std::time_t SetTime(size_t hours, size_t minutes) {
     std::tm* tm_result_time = std::localtime(&current_time);
     tm_result_time->tm_hour = hours;
     tm_result_time->tm_min = minutes;
-
+    //tm_result_time->tm_sec=0;
+//Эта строчка позволяет решить проблему с границами при выводе информации в заданном интервале,когда 
+//поезд отправляется в 10 00 и граница нижняя тоже 10 00 но вывод непроисходит так как секнуды в момент вызова 
+//setTime для lower может быть больше чем секунды поезда,тоже самое для upper
     std::time_t result_time = std::mktime(tm_result_time);
     return result_time;
 }
