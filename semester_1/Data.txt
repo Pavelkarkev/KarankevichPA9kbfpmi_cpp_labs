@@ -1,0 +1,17 @@
+Math 9 101 Ivanov I. I.
+Physics 7 101 Ivanov I. I.
+Programming 10 101 Ivanov I. I.
+Math 4 102 Petrov A. A.
+History 6 102 Petrov A. A.
+Chemistry 5 102 Petrov A. A.
+Programming 10 103 Sidorov S. S.
+Math 10 103 Sidorov S. S.
+Physics 8 103 Sidorov S. S.
+Math 3 104 Kozlov V. V.
+Biology 2 104 Kozlov V. V.
+History 4 104 Kozlov V. V.
+Informatics 8 105 Ivanov I. I.
+Physics 9 105 Ivanov I. I.
+Math 7 105 Ivanov I. I.
+History 10 115 Ptqs P. P.
+Physics 10 115 Ptqs P. P.
