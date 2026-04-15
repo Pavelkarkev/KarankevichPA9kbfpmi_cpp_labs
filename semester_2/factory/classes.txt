@@ -1,0 +1,7 @@
+Lab;101;Math;Ivanov;Monday;90;
+Lecture;205;Physics;Petrov;Tuesday;90;
+Lecture;310;Programming;Sidorov;Wednesday;135
+Seminar;101;Math;Ivanov;Thursday;90;Lecture
+Seminar;402;Databases;Petrov;Wednesday;90
+Lab;205;Physics;Smirnova;Friday;90
+Lecture;310;Programming;Sidorov;Monday;135
