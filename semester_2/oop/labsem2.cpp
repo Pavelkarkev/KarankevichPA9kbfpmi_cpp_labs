@@ -53,7 +53,6 @@ void Lecture::DisplayInfo() {
 	Lesson::DisplayInfo();
 	Lecture::GetType();
 }
-// Move constructor
 Lesson::Lesson(Lesson&& other) noexcept :
 	auditorynumber_(std::exchange(other.auditorynumber_, 0)),
 	subject_(std::move(other.subject_)),
