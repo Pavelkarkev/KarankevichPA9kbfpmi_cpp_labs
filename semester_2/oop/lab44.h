@@ -20,6 +20,9 @@ public:
 	std::string Getname();
 	size_t GetTime();
 	std::string GetDay();
+	Lesson(Lesson&& other) noexcept;
+	Lesson& operator=(const Lesson& other);
+	Lesson& operator=(Lesson&& other) noexcept;
 };
 class Lab :public Lesson {
 public:

@@ -5,6 +5,7 @@
 #include<functional>
 #include<map>
 #include<algorithm>
+#include<utility>
 size_t Lesson::counter = 0;
 bool IsEmpty(std::ifstream& in) {
 	return in.peek() == std::ifstream::traits_type::eof();
@@ -51,6 +52,36 @@ std::string Lecture::GetType() {
 void Lecture::DisplayInfo() {
 	Lesson::DisplayInfo();
 	Lecture::GetType();
+}
+// Move constructor
+Lesson::Lesson(Lesson&& other) noexcept :
+	auditorynumber_(std::exchange(other.auditorynumber_, 0)),
+	subject_(std::move(other.subject_)),
+	lecturername_(std::move(other.lecturername_)),
+	dayofweek_(std::move(other.dayofweek_)),
+	duration_(std::exchange(other.duration_, 0)),
+	uid_(counter) {
+	++counter;
+}
+Lesson& Lesson::operator=(const Lesson& other) {
+	if (this != &other) {
+		auditorynumber_ = other.auditorynumber_;
+		subject_ = other.subject_;
+		lecturername_ = other.lecturername_;
+		dayofweek_ = other.dayofweek_;
+		duration_ = other.duration_;
+	}
+	return *this;
+}
+Lesson& Lesson::operator=(Lesson&& other) noexcept {
+	if (this != &other) {
+		auditorynumber_ = std::exchange(other.auditorynumber_, 0);
+		subject_ = std::move(other.subject_);
+		lecturername_ = std::move(other.lecturername_);
+		dayofweek_ = std::move(other.dayofweek_);
+		duration_ = std::exchange(other.duration_, 0);
+	}
+	return *this;
 }
 std::vector<std::unique_ptr<Lesson>> ReadFromFile(const std::string& classes_file) {
 	std::ifstream in{ classes_file };
